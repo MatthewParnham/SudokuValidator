@@ -114,6 +114,27 @@ public class Main {
     }
   }
 
+  public static String validateList(List<String> list) {
+    // hashmap to store the frequency of element
+    Map<String, Integer> hm = new HashMap<String, Integer>();
+
+    for (String i : list) {
+      Integer j = hm.get(i);
+      hm.put(i, (j == null) ? 1 : j + 1);
+    }
+
+    // displaying the occurrence of elements in the arraylist
+    for (Map.Entry<String, Integer> val : hm.entrySet()) {
+      //System.out.println("Element " + val.getKey() + " "
+        //               + "occurs"
+          //             + ": " + val.getValue() + " times");
+      if(val.getValue() > 1) {
+        return val.getKey();
+      }
+    }
+    return "0";
+  }
+
   public static void main(String[] args) {
 
     //read in file
@@ -139,7 +160,7 @@ public class Main {
     printList(getRow(records,0,0));
     printList(getColumn(records,0,0));
     printList(getCube(records,0,0));
-
+    System.out.println(validateList(getRow(records,0,0)));
     //printList(records);
     // records.row().col() so updown().leftright()
     //System.out.println(records.get(1).get(0));
@@ -147,7 +168,7 @@ public class Main {
     //main loop
     for(int i = 0; i < 9; i++) {
       for(int j = 0; j < 9; j++) {
-        
+
       }
     }
 
