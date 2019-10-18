@@ -114,7 +114,7 @@ public class Main {
     }
   }
 
-  public static String validateList(List<String> list) {
+  public static String validateList(List<String> list) { //returns number that is duplicated. returns 0 if valid
     // hashmap to store the frequency of element
     Map<String, Integer> hm = new HashMap<String, Integer>();
 
@@ -154,7 +154,7 @@ public class Main {
 
     int rows = records.size();
     int cols = records.get(0).size();
-
+/*
     printGrid(records);
     System.out.println();
     printList(getRow(records,0,0));
@@ -164,11 +164,20 @@ public class Main {
     //printList(records);
     // records.row().col() so updown().leftright()
     //System.out.println(records.get(1).get(0));
-
+*/
+    printGrid(records);
     //main loop
     for(int i = 0; i < 9; i++) {
-      for(int j = 0; j < 9; j++) {
-
+      List<String> column = getColumn(records,0,i);
+      String dupe = validateList(column);
+      //System.out.println(dupe);
+      if (!dupe.equals("0")) {
+        int idx = column.indexOf(dupe);
+        System.out.println(validateList(getRow(records,idx,i)));
+        System.out.println(validateList(getCube(records,idx,i)));
+        idx = column.lastIndexOf(dupe);
+        System.out.println(validateList(getRow(records,idx,i)));
+        System.out.println(validateList(getCube(records,idx,i)));
       }
     }
 
