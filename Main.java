@@ -134,6 +134,28 @@ public class Main {
     }
     return "0";
   }
+  public static String getMissing(List<String> list) { //returns number that is duplicated. returns 0 if valid
+    // hashmap to store the frequency of element
+    Map<String, Integer> hm = new HashMap<String, Integer>();
+    for(int i = 1; i < 10; i++) {
+      hm.put(String.valueOf(i),0);
+    }
+    for (String i : list) {
+      Integer j = hm.get(i);
+      hm.put(i, (j == null) ? 1 : j + 1);
+    }
+
+    // displaying the occurrence of elements in the arraylist
+    for (Map.Entry<String, Integer> val : hm.entrySet()) {
+      //System.out.println("Element " + val.getKey() + " "
+        //               + "occurs"
+          //             + ": " + val.getValue() + " times");
+      if(val.getValue() == 0) {
+        return val.getKey();
+      }
+    }
+    return "0";
+  }
 
   public static void main(String[] args) {
 
@@ -154,45 +176,86 @@ public class Main {
 
     int rows = records.size();
     int cols = records.get(0).size();
-/*
-    printGrid(records);
-    System.out.println();
-    printList(getRow(records,0,0));
-    printList(getColumn(records,0,0));
-    printList(getCube(records,0,0));
-    System.out.println(validateList(getRow(records,0,0)));
-    //printList(records);
-    // records.row().col() so updown().leftright()
-    //System.out.println(records.get(1).get(0));
-*/
+
+
     printGrid(records);
     //main loop
+
+    //check columns
     for(int i = 0; i < 9; i++) {
       List<String> column = getColumn(records,0,i);
       String dupe = validateList(column);
       //System.out.println(dupe);
       if (!dupe.equals("0")) {
-        int idx = column.indexOf(dupe);
-        System.out.println(validateList(getRow(records,idx,i)));
-        System.out.println(validateList(getCube(records,idx,i)));
-        idx = column.lastIndexOf(dupe);
-        System.out.println(validateList(getRow(records,idx,i)));
-        System.out.println(validateList(getCube(records,idx,i)));
+        int firstIdx = column.indexOf(dupe);
+        int secondIdx = column.lastIndexOf(dupe);
+        String missing = getMissing(column);
+        //System.out.println(String.valueOf(i) + "  " + missing);
+        if(validateList(getRow(records,firstIdx,i)).equals("0")) {
+          System.out.println("In row " + String.valueOf(secondIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
+          records.get(secondIdx).set(i, missing);
+        }
+        else {
+          System.out.println("In row " + String.valueOf(firstIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
+          records.get(firstIdx).set(i, missing);
+        }
+
+
       }
     }
 
+    //check rows
+    for(int i = 0; i < 9; i++) {
+      List<String> row = getRow(records,i,0);
+      String dupe = validateList(row);
+      //System.out.println(dupe);
+      if (!dupe.equals("0")) {
+        int firstIdx = row.indexOf(dupe);
+        int secondIdx = row.lastIndexOf(dupe);
+        String missing = getMissing(row);
+        //System.out.println(String.valueOf(i) + "  " + missing);
+        if(validateList(getColumn(records,i,firstIdx)).equals("0")) {
+          System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+          records.get(i).set(secondIdx, missing);
+        }
+        else {
+          System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+          records.get(i).set(firstIdx, missing);
+        }
 
-    //validate rows
-    //loop through rows
-      //validate each row
 
-    //validate cols
-    //loop through cols
-      //validate each col
+      }
+    }
 
-    //validate cubes
-    //loop through cubes
-      //validate each cube
+    //check cubes
+    for(int i = 0; i < 3; i++) {
+      for(int j = 0; j < 3; j++) {
+        List<String> cube = getCube(records,i*3,j*3);
+        String dupe = validateList(cube);
+        //System.out.println(dupe);
+        if (!dupe.equals("0")) {
+          System.out.println("DEBUG");
+          int firstIdx = cube.indexOf(dupe);
+          int secondIdx = cube.lastIndexOf(dupe);
+          String missing = getMissing(cube);
+          //System.out.println(String.valueOf(i) + "  " + missing);
+          if(validateList(getColumn(records,i,firstIdx)).equals("0")) {
+            System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+            //records.get(i).set(secondIdx, missing);
+          }
+          else {
+            System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+            //records.get(i).set(firstIdx, missing);
+          }
+
+
+        }
+      }
+    }
+
+    System.out.println();
+    System.out.println("Solved Puzzle:");
+    printGrid(records);
 
 
 
