@@ -26,11 +26,11 @@ public class Validator extends Thread {
           int secondIdx = row.lastIndexOf(dupe);
           String missing = getMissing(row);
           if(validateList(getColumn(records,i,firstIdx)).equals("0")) {
-            System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+            System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
             //records.get(i).set(secondIdx, missing);
           }
           else {
-            System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+            System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
             //records.get(i).set(firstIdx, missing);
           }
 
@@ -49,11 +49,11 @@ public class Validator extends Thread {
           int secondIdx = column.lastIndexOf(dupe);
           String missing = getMissing(column);
           if(validateList(getRow(records,firstIdx,i)).equals("0")) {
-            System.out.println("In row " + String.valueOf(secondIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
+            System.out.println("CIn row " + String.valueOf(secondIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
             //records.get(secondIdx).set(i, missing);
           }
           else {
-            System.out.println("In row " + String.valueOf(firstIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
+            System.out.println("CIn row " + String.valueOf(firstIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
             //records.get(firstIdx).set(i, missing);
           }
 
@@ -69,27 +69,103 @@ public class Validator extends Thread {
           List<String> cube = getCube(records,i*3,j*3);
           String dupe = validateList(cube);
           if (!dupe.equals("0")) {
-            //System.out.println("DEBUG");
+            //System.out.println("i : " + i*3 + " and j: " + j*3);
             int firstIdx = cube.indexOf(dupe);
+            //System.out.println(firstIdx);
             int firstRow,firstCol;
-            switch(firstIdx):
-              case "0":
+            switch(firstIdx) {
+              case 0:
                 firstRow = 0;
                 firstCol = 0;
                 break;
-              case "1":
+              case 1:
+                firstRow = 0;
+                firstCol = 1;
+                break;
+              case 2:
+                firstRow = 0;
+                firstCol = 2;
+                break;
+              case 3:
                 firstRow = 1;
                 firstCol = 0;
                 break;
-              case "2":
+              case 4:
+                firstRow = 1;
+                firstCol = 1;
+                break;
+              case 5:
+                firstRow = 1;
+                firstCol = 2;
+                break;
+              case 6:
+                firstRow = 2;
+                firstCol = 0;
+                break;
+              case 7:
+                firstRow = 2;
+                firstCol = 1;
+                break;
+              case 8:
+                firstRow = 2;
+                firstCol = 2;
+                break;
+              default:
+                firstRow = 0;
+                firstCol = 0;
+                break;
+              }
             int secondIdx = cube.lastIndexOf(dupe);
+            int secondRow,secondCol;
+            switch(firstIdx) {
+              case 0:
+                secondRow = 0;
+                secondCol = 0;
+                break;
+              case 1:
+                secondRow = 0;
+                secondCol = 1;
+                break;
+              case 2:
+                secondRow = 0;
+                secondCol = 2;
+                break;
+              case 3:
+                secondRow = 1;
+                secondCol = 0;
+                break;
+              case 4:
+                secondRow = 1;
+                secondCol = 1;
+                break;
+              case 5:
+                secondRow = 1;
+                secondCol = 2;
+                break;
+              case 6:
+                secondRow = 2;
+                secondCol = 0;
+                break;
+              case 7:
+                secondRow = 2;
+                secondCol = 1;
+                break;
+              case 8:
+                secondRow = 2;
+                secondCol = 2;
+                break;
+              default:
+                secondRow = 0;
+                secondCol = 0;
+                break;
+              }
             String missing = getMissing(cube);
-            if(!validateList(getColumn(records,i,secondIdx)).equals("0") || !validateList(getRow(records,i,secondIdx)).equals("0")) {
-              System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+            if(!validateList(getColumn(records,secondRow,secondCol)).equals("0") || !validateList(getRow(records,secondRow,secondCol)).equals("0")) {
+              System.out.println("In row " + String.valueOf((i*3)+ secondRow + 1) + ", column " + String.valueOf((j*3)+ secondCol + 1) + ", the " + dupe + " should be a " + missing + ".");
 
             }
             else {
-              System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
+              System.out.println("In row " + String.valueOf((i*3)+ firstRow + 1) + ", column " + String.valueOf((j*3)+ firstCol + 1) + ", the " + dupe + " should be a " + missing + ".");
 
             }
 

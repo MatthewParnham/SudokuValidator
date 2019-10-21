@@ -44,8 +44,14 @@ public class Main {
     rows.start();
 
     //check cubes
-    Validator cubes = new Validator(records, "cubes");
-    cubes.start();
+    //Validator cubes = new Validator(records, "cubes");
+    //cubes.start();
+
+    try {
+      cols.join();
+      rows.join();
+      //cubes.join();
+    } catch(Exception e) {}
 
     System.out.println();
     System.out.println("Solved Puzzle:");
