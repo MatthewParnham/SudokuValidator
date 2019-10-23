@@ -21,20 +21,22 @@ public class Validator extends Thread {
       for(int i = 0; i < 9; i++) {
         List<String> row = getRow(records,i,0);
         String dupe = validateList(row);
+        //System.out.println("DUPE: " + dupe);
         if (!dupe.equals("0")) {
-          int firstIdx = row.indexOf(dupe);
-          int secondIdx = row.lastIndexOf(dupe);
-          String missing = getMissing(row);
-          if(validateList(getColumn(records,i,firstIdx)).equals("0")) {
-            System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
-            //records.get(i).set(secondIdx, missing);
+          for (int j = 0; j < dupe.length(); j++) {
+            String letter = dupe.substring(j,j+1);
+            int firstIdx = row.indexOf(letter);
+            int secondIdx = row.lastIndexOf(letter);
+            String missing = getMissing(row);
+            if(validateList(getColumn(records,i,firstIdx)).equals("0")) {
+              System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + letter + " should be a " + missing + ".");
+              //records.get(i).set(secondIdx, missing);
+            }
+            else {
+              System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + letter + " should be a " + missing + ".");
+              //records.get(i).set(firstIdx, missing);
+            }
           }
-          else {
-            System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + dupe + " should be a " + missing + ".");
-            //records.get(i).set(firstIdx, missing);
-          }
-
-
         }
       }
     }
@@ -45,19 +47,20 @@ public class Validator extends Thread {
         List<String> column = getColumn(records,0,i);
         String dupe = validateList(column);
         if (!dupe.equals("0")) {
-          int firstIdx = column.indexOf(dupe);
-          int secondIdx = column.lastIndexOf(dupe);
-          String missing = getMissing(column);
-          if(validateList(getRow(records,firstIdx,i)).equals("0")) {
-            System.out.println("CIn row " + String.valueOf(secondIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
-            //records.get(secondIdx).set(i, missing);
+          for (int j = 0; j < dupe.length(); j++) {
+            String letter = dupe.substring(j,j+1);
+            int firstIdx = column.indexOf(letter);
+            int secondIdx = column.lastIndexOf(letter);
+            String missing = getMissing(column);
+            if(validateList(getRow(records,firstIdx,i)).equals("0")) {
+              System.out.println("CIn row " + String.valueOf(secondIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + letter + " should be a " + missing + ".");
+              //records.get(secondIdx).set(i, missing);
+            }
+            else {
+              System.out.println("CIn row " + String.valueOf(firstIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + letter + " should be a " + missing + ".");
+              //records.get(firstIdx).set(i, missing);
+            }
           }
-          else {
-            System.out.println("CIn row " + String.valueOf(firstIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + dupe + " should be a " + missing + ".");
-            //records.get(firstIdx).set(i, missing);
-          }
-
-
         }
       }
     }
@@ -275,6 +278,7 @@ public class Validator extends Thread {
   public static String validateList(List<String> list) { //returns number that is duplicated. returns 0 if valid
     // hashmap to store the frequency of element
     Map<String, Integer> hm = new HashMap<String, Integer>();
+    String result = "";
 
     for (String i : list) {
       Integer j = hm.get(i);
@@ -287,10 +291,15 @@ public class Validator extends Thread {
         //               + "occurs"
           //             + ": " + val.getValue() + " times");
       if(val.getValue() > 1) {
-        return val.getKey();
+        result += val.getKey();
       }
     }
-    return "0";
+    if(result.equals("")) {
+      return "0";
+    }
+    else {
+      return result;
+    }
   }
   public static String getMissing(List<String> list) { //returns number that is duplicated. returns 0 if valid
     // hashmap to store the frequency of element

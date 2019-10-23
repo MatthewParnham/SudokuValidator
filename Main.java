@@ -48,7 +48,7 @@ public class Main {
     //cubes.start();
 
     try {
-      cols.join();
+      //cols.join();
       rows.join();
       //cubes.join();
     } catch(Exception e) {}
