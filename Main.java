@@ -22,7 +22,6 @@ public class Main {
 
     //read in file
     String fName = args[0];
-    //System.out.println(fName);
 
     List<List<String>> records = new ArrayList<>();
     try (BufferedReader br = new BufferedReader(new FileReader(fName))) {
@@ -33,7 +32,10 @@ public class Main {
         }
     } catch(Exception e) {}
 
+    System.out.println("\nFile: " + fName);
+    System.out.println("Original Puzzle");
     printGrid(records);
+    System.out.println();
     //main loop
 
     //check columns
@@ -62,11 +64,11 @@ public class Main {
           }catch(Exception e) {}
 
           if(!firstRow.isValid || !firstCube.isValid) {
-            System.out.println("CIn row " + String.valueOf(firstIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + letter + " should be a " + missing + ".");
+            System.out.println("In row " + String.valueOf(firstIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + letter + " should be a " + missing + ".");
             records.get(firstIdx).set(i, missing);
           }
           else if (!secondRow.isValid || !secondCube.isValid) {
-            System.out.println("CIn row " + String.valueOf(secondIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + letter + " should be a " + missing + ".");
+            System.out.println("In row " + String.valueOf(secondIdx + 1) + ", column " + String.valueOf(i + 1) + ", the " + letter + " should be a " + missing + ".");
             records.get(secondIdx).set(i, missing);
           }
         }
@@ -99,28 +101,17 @@ public class Main {
             secondCol.join();
             secondCube.join();
           }catch(Exception e) {}
-            System.out.println("firstCol: " + firstCol.isValid + "\nfirstCube: " + firstCube.isValid + "\nsecondCol: " + secondCol.isValid + "\nsecondCube: "+ secondCube.isValid);
           if(!firstCol.isValid || !firstCube.isValid) {
-            System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + letter + " should be a " + missing + ".");
+            System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(firstIdx + 1) + ", the " + letter + " should be a " + missing + ".");
             records.get(i).set(firstIdx, missing);
           }
           else if(!secondCol.isValid || !secondCube.isValid) {
-            System.out.println("RIn row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + letter + " should be a " + missing + ".");
+            System.out.println("In row " + String.valueOf(i + 1) + ", column " + String.valueOf(secondIdx + 1) + ", the " + letter + " should be a " + missing + ".");
             records.get(i).set(secondIdx, missing);
           }
         }
       }
     }
-
-    //check cubes
-    //Validator cubes = new Validator(records, "cubes");
-    //cubes.start();
-
-    try {
-      //cols.join();
-      //rows.join();
-      //cubes.join();
-    } catch(Exception e) {}
 
     System.out.println();
     System.out.println("Solved Puzzle:");
